@@ -1,5 +1,4 @@
 import java.rmi.registry.*;
-import java.util.Iterator;
 import java.util.Vector;
 
 public class MainClassClient {
