@@ -5,9 +5,7 @@ import java.util.Vector;
 public class GestoreGiorniImpl extends UnicastRemoteObject implements GestoreGiorni {
 
     private Vector<Giorno> days;
-    private int nSessioni;
     private int ndays;
-    private int nIntervents;
 
     public GestoreGiorniImpl(int ndays,int nSessioni,int nIntervents) throws RemoteException{
 
@@ -39,7 +37,6 @@ public class GestoreGiorniImpl extends UnicastRemoteObject implements GestoreGio
     public boolean setIntervento(int nday,int nsessione,int nIntervents,String name)throws RemoteException{
 
         return days.elementAt(nday).setIntervento(nIntervents, nsessione, name);
-        // TODO va modificata.
 
     }
 

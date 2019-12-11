@@ -29,8 +29,5 @@ public class SessioneImpl extends UnicastRemoteObject implements Sessione {
 
         }
         return false;
-
-
-        // TODO va modificata.
     }
 }
