@@ -1,10 +1,15 @@
+/**
+ * @author Nicolò Maio
+ *
+ * */
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class MainClassServer {
 
-    public static void main(String args[])
-    {
+    public static void main(String[] args) {
+        // MainClassServer
 
         try {
 

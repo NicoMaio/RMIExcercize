@@ -1,3 +1,7 @@
+/**
+ * @author Nicolò Maio
+ *
+ * */
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,7 +11,9 @@ import java.util.Vector;
 
 public class MainClassClient {
 
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
+        // MainClassClient
+
         Registry reg = LocateRegistry.getRegistry(9999);
 
         GestoreGiorni giorniCongresso = (GestoreGiorni) reg.lookup(GestoreGiorni.SERVICE_NAME);
@@ -15,90 +21,95 @@ public class MainClassClient {
 
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
+        /* Interfaccia grafica */
         boolean term_var = true;
-        while(term_var){
+        while(term_var) {
             System.out.println("Select Option: ");
             System.out.println("1. Show all days programs");
             System.out.println("2. Show one day program");
             System.out.println("3. Exit");
 
-            int request = Integer.parseInt(input.readLine());
+            try {
+                int request = Integer.parseInt(input.readLine());
 
-            switch (request) {
+                switch (request) {
 
-                case 1: {
-                    printAllDays(giorniCongresso.getAllDays());
+                    case 1: {
+                        printAllDays(giorniCongresso.getAllDays());
 
-                    System.out.println("Choose next Option: ");
-                    System.out.println("1. Go back to last menu");
-                    System.out.println("2. Occupy an intervent");
+                        System.out.println("Choose next Option: ");
+                        System.out.println("1. Go back to last menu");
+                        System.out.println("2. Occupy an intervent");
 
-                    request = Integer.parseInt(input.readLine());
+                        request = Integer.parseInt(input.readLine());
 
-                    if(request == 1) {
+                        if (request == 1) {
 
-                        continue;
+                            continue;
 
-                    } else {
+                        } else {
+
+                            try {
+
+                                occupyIntervent(giorniCongresso, input);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    break;
+
+                    case 2: {
+
+                        System.out.println("Insert number of day");
+
+                        int day = Integer.parseInt(input.readLine());
+
+                        while (day < 0 || day >= 3) {
+                            System.out.println("wrong day selected, try again");
+                            System.out.println("The days avalaible are 0,1,2");
+                            day = Integer.parseInt(input.readLine());
+                        }
 
                         try {
 
-                            occupyIntervent(giorniCongresso,input);
+                            printOneDay(giorniCongresso.getOneDay(day), day);
 
-                        } catch (IOException e) {
+                        } catch (RemoteException e) {
+
                             e.printStackTrace();
                         }
+
+                        System.out.println("1. Occupy Intervent");
+                        System.out.println("2. Go back to principle menu");
+
+                        request = Integer.parseInt(input.readLine());
+
+                        if (request == 1) {
+
+                            occupyInterventInChoosedDay(giorniCongresso, input, day);
+
+                        } else {
+
+                            continue;
+                        }
                     }
-                }break;
+                    break;
 
-                case 2: {
+                    case 3: {
 
-                    System.out.println("Insert number of day");
+                        term_var = false;
 
-                    int day = Integer.parseInt(input.readLine());
-
-                    while(day < 0 || day >=3) {
-                        System.out.println("wrong day selected, try again");
-                        System.out.println("The days avalaible are 0,1,2");
-                        day = Integer.parseInt(input.readLine());
+                        System.out.println("Bye Bye");
                     }
-
-                    try {
-
-                        printOneDay(giorniCongresso.getOneDay(day), day);
-
-                    } catch (RemoteException e) {
-
-                        e.printStackTrace();
-                    }
-
-                    System.out.println("1. Occupy Intervent");
-                    System.out.println("2. Go back to principle menu");
-
-                    request = Integer.parseInt(input.readLine());
-
-                    if(request == 1) {
-
-                            occupyInterventInChoosedDay(giorniCongresso,input,day);
-
-                    } else {
-
-                        continue;
-                    }
-                } break;
-
-                case 3: {
-
-                    term_var = false;
-
-                    System.out.println("GG EZ, BB");
+                    break;
                 }
+
+            }catch (Exception e){
+                System.err.println("insert numbers not string");
             }
-
         }
-
-
-
 
 
     }
@@ -143,9 +154,20 @@ public class MainClassClient {
 
         int session = Integer.parseInt(input.readLine());
 
+        while(session < 0 || session >=12) {
+            System.out.println("wrong session selected, try again");
+            System.out.println("The sessions avalaible are 0,1,2,3,4,5,6,7,8,9,10,11");
+            session = Integer.parseInt(input.readLine());
+        }
         System.out.println("Insert number of the intervent");
 
         int intervent = Integer.parseInt(input.readLine());
+
+        while(intervent < 0 || intervent >=5) {
+            System.out.println("wrong intervent selected, try again");
+            System.out.println("The intervents avalaible are 0,1,2,3,4");
+            intervent = Integer.parseInt(input.readLine());
+        }
 
         System.out.println("Insert your Name");
 
@@ -169,14 +191,30 @@ public class MainClassClient {
         System.out.println("Insert the number of the day");
 
         int day = Integer.parseInt(input.readLine());
+        while(day < 0 || day >=3) {
+            System.out.println("wrong day selected, try again");
+            System.out.println("The days avalaible are 0,1,2");
+            day = Integer.parseInt(input.readLine());
+        }
 
         System.out.println("Insert the number of the session");
 
         int session = Integer.parseInt(input.readLine());
 
+        while(session < 0 || session >=12) {
+            System.out.println("wrong session selected, try again");
+            System.out.println("The sessions avalaible are 0,1,2,3,4,5,6,7,8,9,10,11");
+            session = Integer.parseInt(input.readLine());
+        }
         System.out.println("Insert number of the intervent");
 
         int intervent = Integer.parseInt(input.readLine());
+
+        while(intervent < 0 || intervent >=5) {
+            System.out.println("wrong intervent selected, try again");
+            System.out.println("The intervents avalaible are 0,1,2,3,4");
+            intervent = Integer.parseInt(input.readLine());
+        }
 
         System.out.println("Insert your Name");
 

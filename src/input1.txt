@@ -1,0 +1,9 @@
+Eseguire con:
+    - java MainClassServer
+    - java MainClassClient
+
+Info Interfaccia grafica MainClass Client:
+    - per selezionare un'opzione inserire indice numerico corrispettivo.
+    - gli indici dei giorni vanno da 0 a 2.
+    - gli indici delle sessioni vanno da 0 a 11.
+    - gli indici degli interventi vanno da 0 a 4.
